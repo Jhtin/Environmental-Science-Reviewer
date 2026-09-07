@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0c1714" />
+  <title>EcoQuest Reviewer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="ambient a1"></div><div class="ambient a2"></div>
+<header class="topbar">
+  <a class="brand" href="#home"><span class="brand-mark">E</span><span>EcoQuest</span><small>Exam Reviewer</small></a>
+  <div class="top-actions">
+    <button class="icon-btn" id="focusBtn" title="Focus mode">◐</button>
+    <button class="icon-btn" id="soundBtn" title="Sound">♫</button>
+  </div>
+</header>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <nav>
+      <button class="nav-link active" data-view="home">⌂ <span>Dashboard</span></button>
+      <button class="nav-link" data-view="notes">▤ <span>Quick Notes</span></button>
+      <button class="nav-link" data-view="flashcards">◈ <span>Flashcards</span></button>
+      <button class="nav-link" data-view="quiz">✓ <span>Quiz Arena</span></button>
+      <button class="nav-link" data-view="truefalse">⚡ <span>True / False</span></button>
+      <button class="nav-link" data-view="match">⇄ <span>Match Game</span></button>
+      <button class="nav-link" data-view="boss">★ <span>Boss Exam</span></button>
+    </nav>
+    <div class="sidebar-card">
+      <div class="streak-row"><span>🔥</span><div><b id="streakNum">1 day</b><small>Study streak</small></div></div>
+      <div class="xpbar"><i id="xpFill"></i></div>
+      <small><span id="xpNum">0</span> XP earned</small>
+    </div>
+  </aside>
+
+  <main id="main">
+    <section class="view active" id="home">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">ENVIRONMENTAL SCIENCE</span>
+          <h1>Study smarter.<br><em>Remember longer.</em></h1>
+          <p>A focused reviewer built from your 15-page module, with active recall, practice questions, and mini-games.</p>
+          <div class="hero-actions">
+            <button class="primary" data-go="quiz">Start a quick quiz →</button>
+            <button class="secondary" data-go="flashcards">Review flashcards</button>
+          </div>
+        </div>
+        <div class="orb-wrap">
+          <div class="orb"><div class="earth">🌍</div><span>READY</span><strong id="readiness">0%</strong><small>exam readiness</small></div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <article><span>Mastery</span><b id="masteryStat">0%</b><small>Based on your answers</small></article>
+        <article><span>Questions</span><b id="questionStat">0</b><small>Answered so far</small></article>
+        <article><span>Best streak</span><b id="bestStat">0</b><small>Correct in a row</small></article>
+        <article><span>Flashcards</span><b>100+</b><small>Key terms & concepts</small></article>
+      </div>
+
+      <div class="section-head"><div><span class="eyebrow">CHOOSE A PATH</span><h2>Review by chapter</h2></div><button class="text-btn" id="resetProgress">Reset progress</button></div>
+      <div class="chapter-grid" id="chapterGrid"></div>
+
+      <div class="two-col">
+        <article class="panel">
+          <div class="panel-title"><span>⚙</span><div><h3>Exam Formula Lab</h3><p>High-probability calculation items</p></div></div>
+          <div class="formula"><b>Mark–Recapture</b><code>N = (M × C) / R</code><small>Marked first × total second catch ÷ marked recaptured</small></div>
+          <div class="formula"><b>Population Density</b><code>D = N / S</code><small>Individuals ÷ area or volume</small></div>
+          <div class="formula"><b>Growth Rate</b><code>(B + I) − (D + E)</code><small>Births + Immigration − Deaths − Emigration</small></div>
+        </article>
+        <article class="panel challenge">
+          <span class="eyebrow">TODAY'S CHALLENGE</span><h3>Can you get 10 straight?</h3>
+          <p>Take the speed round. One wrong answer resets your run.</p>
+          <button class="primary" data-go="truefalse">Play speed round →</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="notes">
+      <div class="page-head"><span class="eyebrow">CONDENSED REVIEW</span><h1>Quick Notes</h1><p>Scan the whole module chapter by chapter.</p></div>
+      <div id="notesWrap"></div>
+    </section>
+
+    <section class="view" id="flashcards">
+      <div class="page-head"><span class="eyebrow">ACTIVE RECALL</span><h1>Flashcards</h1><p>Try to answer before flipping. Mark difficult cards so they return more often.</p></div>
+      <div class="toolbar">
+        <select id="flashFilter"><option value="all">All chapters</option></select>
+        <button class="secondary" id="shuffleCards">Shuffle</button>
+      </div>
+      <div class="flash-stage">
+        <div class="flashcard" id="flashcard"><div class="card-face front"><span id="flashChapter"></span><h2 id="flashTerm"></h2><small>Click to reveal answer</small></div><div class="card-face back"><span>ANSWER</span><p id="flashAnswer"></p><small>Click to flip back</small></div></div>
+      </div>
+      <div class="flash-controls">
+        <button class="danger-soft" id="hardCard">Still learning</button>
+        <span id="flashCount"></span>
+        <button class="success-soft" id="easyCard">Got it ✓</button>
+      </div>
+    </section>
+
+    <section class="view" id="quiz">
+      <div class="page-head"><span class="eyebrow">MULTIPLE CHOICE</span><h1>Quiz Arena</h1><p>10 questions per run with explanations after each answer.</p></div>
+      <div class="quiz-box" id="quizBox"></div>
+    </section>
+
+    <section class="view" id="truefalse">
+      <div class="page-head"><span class="eyebrow">SPEED ROUND</span><h1>True or False</h1><p>Build a combo. One wrong answer breaks your streak.</p></div>
+      <div class="tf-wrap" id="tfWrap"></div>
+    </section>
+
+    <section class="view" id="match">
+      <div class="page-head"><span class="eyebrow">MEMORY GAME</span><h1>Match the Concept</h1><p>Pair each environmental term with its correct description.</p></div>
+      <div class="match-hud"><span>Matches: <b id="matches">0</b>/8</span><span>Moves: <b id="moves">0</b></span><button class="secondary" id="newMatch">New board</button></div>
+      <div class="match-grid" id="matchGrid"></div>
+    </section>
+
+    <section class="view" id="boss">
+      <div class="page-head"><span class="eyebrow">FINAL SIMULATION</span><h1>Boss Exam</h1><p>25 mixed questions. No hints until the end.</p></div>
+      <div class="boss-box" id="bossBox"></div>
+    </section>
+  </main>
+</div>
+
+<footer>Built for focused review • Progress is saved automatically on this device.</footer>
+<script src="app.js"></script>
+</body>
+</html>
